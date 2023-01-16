@@ -72,12 +72,8 @@ class Tasks {
 
             console.log(`${idx} ${desc} :: ${state}` )
 
-            } else {
-
-                
             }
           
-
         })
 
     }
