@@ -3,7 +3,8 @@ const {saveDb, readDb} = require('./helpers/saveArchive');
 const { 
     inquirerMenu,
      pause,
-      readInput} 
+      readInput,
+      listTaskDelete} 
       = require('./helpers/inquirer');
 const Tasks = require('./models/tasks');
 
@@ -42,11 +43,17 @@ const main = async () => {
                 break;
 
             case'3':
-                tasks.listAwaitComplete();
+                tasks.listAwaitComplete(true);
                 break;
                 
             case'4':
-                tasks.listAwaitComplete();
+                tasks.listAwaitComplete(false);
+                break;
+
+            case'6':
+                const id = await listTaskDelete( tasks.listArr);
+                console.log({ id })
+
                 break;
         }
 

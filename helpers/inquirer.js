@@ -1,4 +1,5 @@
-const inquirer = require('inquirer')
+const inquirer = require('inquirer');
+const Tasks = require('../models/tasks');
 require('colors');
 
 const menuQuestions = [
@@ -9,31 +10,31 @@ const menuQuestions = [
         choices:[
             {
                 value:'1',
-                name:`${'1'.green}- Crear tarea`
+                name:`${'1'.blue}- Crear tarea`
             },
             {
                 value:'2',
-                name:`${'2'.green}- Listar tarea`
+                name:`${'2'.blue}- Listar tarea`
             },
             {
                 value:'3',
-                name:`${'3'.green}- Listar tareas completadas`
+                name:`${'3'.blue}- Listar tareas completadas`
             },
             {
                 value:'4',
-                name:`${'4'.green}- Listar tareas pendientes`
+                name:`${'4'.blue}- Listar tareas pendientes`
             },
             {
                 value:'5',
-                name:`${'5'.green}- Completar tareas`
+                name:`${'5'.blue}- Completar tareas`
             },
             {
                 value:'6',
-                name:`${'6'.green}- Borrar tarea`
+                name:`${'6'.blue}- Borrar tarea`
             },
             {
                 value:'0',
-                name:`${'0'.green}- Salir`
+                name:`${'0'.blue}- Salir`
             },
         ]
     }
@@ -43,9 +44,9 @@ const menuQuestions = [
 const inquirerMenu = async () => {
 
     console.clear();
-    console.log("=============================".green);
+    console.log("=============================".blue);
     console.log("    Seleccione una opción:    ".white);
-    console.log("=============================\n".green);
+    console.log("=============================\n".blue);
 
     const {option} = await inquirer.prompt(menuQuestions);
     return option;
@@ -87,11 +88,37 @@ const readInput = async ( message )=> {
 
 }
 
+const listTaskDelete = async ( task = []) => {
 
+    const choices  = task.map( (task, i) => {
+
+        const idx = `${i + 1}.`.blue
+        return {
+            value: task.id,
+            name: `${idx} ${task.desc}`
+        }
+
+        
+    });
+
+    const question = [
+        {
+            type: 'list',
+            name: 'id',
+            message: 'Borrar',
+            choices
+        }
+    ]
+
+
+    const { id } = await inquirer.prompt(question);
+    return id;
+}
 
 
 module.exports = {
     inquirerMenu,
     pause,
-    readInput
+    readInput,
+    listTaskDelete
 }
