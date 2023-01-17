@@ -4,7 +4,10 @@ const {
     inquirerMenu,
      pause,
       readInput,
-      listTaskDelete} 
+      listTaskDelete,
+        confirm,
+            showListCheckList
+    } 
       = require('./helpers/inquirer');
 const Tasks = require('./models/tasks');
 
@@ -50,9 +53,23 @@ const main = async () => {
                 tasks.listAwaitComplete(false);
                 break;
 
+            case'5':
+                const ids = await showListCheckList(tasks.listArr);
+                tasks.toggleCompletes( ids );
+                break;
+
             case'6':
                 const id = await listTaskDelete( tasks.listArr);
-                console.log({ id })
+                if ( id !== '0') {
+
+                        const ok = await confirm('Estas Seguro ?'); // Preguntar si esta seguro
+                    if (ok) {
+                        tasks.deleteTask(id);
+                        console.log('Tarea Eliminada Correctamente');
+                    }
+                    
+                }
+                
 
                 break;
         }

@@ -79,7 +79,7 @@ class Tasks {
                 //Mostrar tareas completadas
                 if (completadoEn) {
                     contador += 1;
-                    console.log(`${(contador + '.').blue} ${desc} :: ${completadoEn}`)
+                    console.log(`${(contador + '.').blue} ${desc} :: ${completadoEn.blue}`)
                 }
                 
             }   else {
@@ -92,6 +92,24 @@ class Tasks {
         
         })
 
+    }
+
+    toggleCompletes( ids = [] ) {
+
+        ids.forEach ( id => {
+
+            const task = this._list[id];
+            if ( !task.completadoEn) {
+                task.completadoEn = new Date().toISOString()
+            }
+        });
+
+        this.listArr.forEach( task => {
+
+            if( !ids.includes(task.id)) {
+                this._list[task.id].completadoEn = null;
+            }
+        })
     }
 
 }
